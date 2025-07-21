@@ -1,0 +1,35 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = [11, 20, 30, 40, 50, 60, 70, 80, 90, 95]
+y = [0.47, 0.91, 1.20, 1.51, 1.86, 2.07, 2.21, 2.61, 2.85, 3.14]
+
+x_np = np.array(x)
+y_np = np.array(y)
+
+degree = 3
+coefficients = np.polyfit(x_np, y_np, degree)
+poly_func = np.poly1d(coefficients)
+
+x_smooth = np.linspace(min(x), max(x), 300)
+y_smooth = poly_func(x_smooth)
+
+plt.figure(figsize=(8, 5))
+plt.scatter(x, y, color='Navy', label='Original Data', zorder=3)
+
+for i in range(len(x)):
+    plt.text(x[i], y[i] + 0.05, f"({x[i]}%, {y[i]:.2f})", fontsize=8, ha='center')
+
+plt.plot(x_smooth, y_smooth, color='SkyBlue', label=f'{degree}° Polynomial Fit')
+
+plt.title("Humidity Drift by Set Point Over Time")
+plt.xlabel("Set Point (%)")
+plt.ylabel("Drift")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+
+plt.savefig(r"C:\Users\Username\Desktop\humidity_drift_chart.png", dpi=300)
+
+plt.show()
